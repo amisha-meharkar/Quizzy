@@ -1,0 +1,73 @@
+﻿@model QuizViewModel.ViewModels.QuestionPromtViewModel
+@using QuizViewModel.ViewModels;
+@{ 
+    var promptObject = Session["promptObject"] as QuestionPromtViewModel;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Manager</title>
+    <style>
+        /* Custom CSS */
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-label {
+            margin-right: 10px;
+        }
+
+        .form-control {
+            margin-right: 10px; /* Adjust spacing between input elements */
+        }
+
+        .Get-Button {
+            background-color: lightgreen;
+            border-radius: 3px;
+            border-style: none;
+            color: white;
+            height: 38px;
+            width: 50px;
+        }
+
+            .Get-Button:active {
+                background-color: darkgreen;
+                box-shadow: 5px 5px 5px lightgreen;
+            }
+    </style>
+</head>
+<body>
+    <h2>Question Manager</h2>
+
+    <form method="post" id="myForm">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label for="category" class="control-label">Category</label>
+                <input type="text" id="category" name="category" class="form-control" value="@promptObject.Category" disabled/>
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+
+                <label for="numberOfQuestions" class="control-label">Number of Questions</label>
+                <input type="text" id="numberOfQuestions" name="numberOfQuestions" class="form-control" />
+                @Html.ValidationMessageFor(model => model.NumberOfQuestions, "", new { @class = "text-danger" })
+                <input type="submit" value="Get" class="Get-Button" />
+            </div>
+        </div>
+    </form>
+    <div>
+        @{
+            Html.RenderPartial("_AIQuestionList", promptObject.Questions);
+        }
+    </div>
+</body>
+</html>
+
+

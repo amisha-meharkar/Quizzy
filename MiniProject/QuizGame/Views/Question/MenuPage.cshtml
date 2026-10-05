@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "MenuPage";
+}
+
+<style>
+    /* Remove the default focus outline */
+    a.custom-card:focus,
+    a.custom-card:active {
+        outline: none;
+    }
+</style>
+
+<h2>MenuPage</h2>
+<link rel="stylesheet" href="~/Content/MenuCard.css" />
+<div class="QuizBar">
+
+    <a href="@Url.Action("QuizMain", "Question")" class="custom-card">
+        <div class="custom-wrapper">
+            <img src="https://ggayane.github.io/css-experiments/cards/dark_rider-cover.jpg" class="custom-cover-image" />
+        </div>
+        <img src="https://ggayane.github.io/css-experiments/cards/dark_rider-title.png" class="custom-title" />
+        <img src="https://ggayane.github.io/css-experiments/cards/dark_rider-character.webp" class="custom-character" />
+    </a>
+
+    <div class="custom-card" id="Quiz2">
+        <div class="custom-wrapper">
+            <img src="https://ggayane.github.io/css-experiments/cards/force_mage-cover.jpg" class="custom-cover-image" />
+        </div>
+        <img src="https://ggayane.github.io/css-experiments/cards/force_mage-title.png" class="custom-title" />
+        <img src="https://ggayane.github.io/css-experiments/cards/force_mage-character.webp" class="custom-character" />
+    </div>
+</div>

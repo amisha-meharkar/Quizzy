@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Score";
+}
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ @*<script>
+     //$(document).ready(() => {
+     //    $.ajax({
+     //        type: "GET",
+     //        url: "https://localhost:44314/CouponAPI/PassCouponNames",
+     //        success: function (result) {
+     //            console.log(result);
+     //        },
+     //        error: function (error) {
+     //            alert('Error Occurred!');
+     //        }
+     //    });
+     //});
+ </script>*@
+ <script type="importmap">
+     {
+         "imports": {
+             "@@google/generative-ai": "https://esm.run/@@google/generative-ai"
+         }
+     }
+ </script>
+ <script type="module" src="~/Scripts/generativeai.js"></script>
+<h2>Score</h2>
+<div>@Session["score"]</div>
+
+<!-- This is where your React component will be rendered -->
+<div id="reactdiv"></div>
+
+<div>COUPON : </div>
+<div id="response"></div>
+<script src="~/Scripts/JSX/Score.jsx"></script>

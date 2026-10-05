@@ -1,0 +1,145 @@
+﻿@model IEnumerable<QuizViewModel.ViewModels.QuestionViewModel>
+
+@{
+    ViewBag.Title = "QuestionList";
+}
+
+<h2>QuestionList</h2>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Table</title>
+    <style>
+        /* Add your custom CSS styles here */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecondOption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThirdOption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FourthOption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorrectAnswer)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstOption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecondOption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThirdOption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FourthOption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CorrectAnswer)
+                </td>
+                <td>
+                    <input type="checkbox" />
+                </td>
+            </tr>
+        }
+
+    </table>
+    <script>
+        $.ajax({
+            type: 'POST',
+            url: '/ControllerName/MethodName', // Replace ControllerName and MethodName with your actual controller and method names
+            success: function (response) {
+                // Handle the successful response from the controller method
+                console.log(response); // Output the response to the console
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors that occur during the AJAX request
+                console.error(error); // Output the error to the console
+            }
+        });
+
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            var button = document.getElementById("toggleButton");
+
+            var isFunctionAdd = true;
+
+            button.addEventListener("click", function () {
+                if (someCondition) {
+                    if (isFunctionAActive) {
+                        functionA();
+                        button.textContent = "Toggle Function B";
+                    } else {
+                        functionB();
+                        button.textContent = "Toggle Function A";
+                    }
+                    // Toggle the state
+                    isFunctionAdd = !isFunctionAdd;
+                } else {
+                    alert("Condition not met");
+                }
+            });
+
+            function functionA() {
+                console.log("Function A is active");
+            }
+
+            function functionB() {
+                console.log("Function B is active");
+            }
+        });
+
+    </script>
+</body>
+</html>
+
+

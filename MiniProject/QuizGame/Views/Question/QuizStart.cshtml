@@ -1,0 +1,112 @@
+﻿@model QuizViewModel.ViewModels.QuestionViewModel
+<h2>Quiz Test</h2>
+<style>
+    .options {
+        width: 300px;
+        border-radius: 25px;
+        margin: 5px;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+/*        background-color: rgba(0, 0, 0, 0.5);*/ /* Semi-transparent black */
+        z-index: 9999; /* Ensure the overlay is on top of everything */
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<div class="overlay" id="notClickable" style="display:none"></div>
+<div id="questionContainer">
+    <div class="question">
+        <h3>@Model.Question</h3>
+        <form class="questionForm">
+            <input class="options" type="hidden" name="QuestionId" value="@Model.QuestionId" />
+            <input class="options" id="optionOne" type="button" name="Answer" value="@Model.FirstOption" /><br />
+            <input class="options" id="optionTwo" type="button" name="Answer" value="@Model.SecondOption" /><br />
+            <input class="options" id="optionThree" type="button" name="Answer" value="@Model.ThirdOption" /><br />
+            <input class="options" id="optionFour" type="button" name="Answer" value="@Model.FourthOption" /><br />
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".options").click(function () {
+            var selectedOption = $(this).val();
+            if (selectedOption == @Model.CorrectAnswer) { // Check if the correct option is being selected
+                // If using ASP.NET MVC or similar, you might need to use Url.Action to generate the correct URL
+                var url = '@Url.Action("IncreaseScore","Question")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function (data) {
+                        console.log("Ajax request successful:", data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Ajax request failed:", status, error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    function ShowCorrectOne() {
+        // Retrieve the correct answer from the model
+        var correctAnswer = '@Model.CorrectAnswer';
+        $(".options").each(function (index, element) {
+            if ($(element).val() === correctAnswer) {
+                // If the option is the correct answer, add green color
+                $(element).css("background-color", "yellowgreen");
+            } else {
+                // If the option is not the correct answer, add red color
+                $(element).css("background-color", "#FA4A68");
+            }
+        });
+    };
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".options").click(function () {
+            ShowCorrectOne();
+            $("#notClickable").css("display", "block");
+            //document.getElementById("questionContainer").style.display = "block";
+            var getUrl = '@Url.Action("QuizMain", "Question")';
+            setTimeout(function() {
+                window.location.href = getUrl;
+            }, 3000); // Wait for 3 seconds before navigating to the next question
+        });
+    });
+</script>
+
+
+<div id="countdown"></div>
+<script>
+    $(document).ready(() => {
+        var countdownDiv = $('#countdown');
+        var remainingTime = 15; // Set the initial time in seconds
+        var getUrl = '@Url.Action("QuizMain", "Question")';
+
+        // Update the countdown every second
+        var countdownInterval = setInterval(function () {
+            remainingTime--;
+
+            // Update the content of the div with the remaining time
+            countdownDiv.text('Redirecting in ' + remainingTime + ' seconds');
+
+            // Check if the countdown has reached zero
+            if (remainingTime <= 0) {
+                ShowCorrectOne();
+                clearInterval(countdownInterval); // Stop the countdown
+                // Wait for 2 seconds before redirecting
+                setTimeout(function() {
+                    window.location.href = getUrl; // Redirect to the URL
+                }, 2000); // 2000 milliseconds = 2 seconds
+            }
+        }, 1000); // Run the interval every second (1000 milliseconds)
+    });
+</script>
